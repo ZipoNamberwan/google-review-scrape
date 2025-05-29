@@ -171,10 +171,19 @@ class GoogleMapsScraper:
     
     def load_more(self):
         fullxpath = '/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null'
-        
+
         load_more_bt = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, fullxpath)))
         load_more_bt.click()
+        
+        # Scroll a bit to keep the page 'alive'
+        try:
+            self.driver.execute_script("window.scrollBy(0, 200);")
+            time.sleep(0.2)
+            self.driver.execute_script("window.scrollBy(0, -200);")
+            time.sleep(0.2)
+        except Exception:
+            pass
 
     def expand_and_parse_batch(self, start, end):
         """Expand and parse reviews from index start to end (exclusive)."""
