@@ -90,21 +90,6 @@ class GoogleMapsScraper:
             except Exception:
                 break  # stop if cannot load more
 
-    def get_reviews(self, offset):
-        # Load more, expand, and parse reviews (original behavior)
-        self.load_more()
-        time.sleep(3)
-        self.expand_review()
-        time.sleep(1)
-        response = BeautifulSoup(self.driver.page_source, 'html.parser')
-        rblock = response.find_all('div', class_='bwb7ce')
-        parsed_reviews = []
-        for index, review in enumerate(rblock):
-            if index >= offset:
-                r = self.__parse(review)
-                parsed_reviews.append(r)
-        return parsed_reviews
-    
     def __parse(self, review):
         # reviewer name
         name = review.find('div', class_='Vpc5Fe')
@@ -190,5 +175,18 @@ class GoogleMapsScraper:
         load_more_bt = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, fullxpath)))
         load_more_bt.click()
+
+    def expand_and_parse_batch(self, start, end):
+        """Expand and parse reviews from index start to end (exclusive)."""
+        self.expand_review()
+        time.sleep(1)
+        response = BeautifulSoup(self.driver.page_source, 'html.parser')
+        rblock = response.find_all('div', class_='bwb7ce')
+        parsed_reviews = []
+        for index, review in enumerate(rblock):
+            if start <= index < end:
+                r = self.__parse(review)
+                parsed_reviews.append(r)
+        return parsed_reviews
 
 

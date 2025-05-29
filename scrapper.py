@@ -14,16 +14,15 @@ def csv_writer(outpath):
     csv_path = 'data/' + outpath
     file_exists = os.path.exists(csv_path)
     last_row = 0
-    if file_exists:
+    targetfile = open(csv_path, mode='a' if file_exists else 'w', encoding='utf-8', newline='\n')
+    writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
+    if not file_exists:
+        writer.writerow(HEADER)
+    else:
         with open(csv_path, encoding='utf-8') as f:
             next(f, None)
             last_row = sum(1 for _ in f)
-    mode = 'a' if file_exists and last_row > 0 else 'w'
-    targetfile = open(csv_path, mode=mode, encoding='utf-8', newline='\n')
-    writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
-    if mode == 'w':
-        writer.writerow(HEADER)
-    return writer, last_row
+    return writer, last_row, targetfile
 
 def get_last_row_count(csv_path):
     path = 'data/' + csv_path
@@ -45,7 +44,7 @@ def main():
 
     args = parser.parse_args()
 
-    writer, last_row = csv_writer(args.o)
+    writer, last_row, targetfile = csv_writer(args.o)
     print(colored(f"Resuming from review {last_row}", "yellow"))
 
     # Read URLs from urls.txt
@@ -53,6 +52,7 @@ def main():
         urls = [line.strip() for line in f if line.strip()]
 
     scraper = GoogleMapsScraper()
+    BATCH_SIZE = 1000
     for url in urls:
         error = scraper.start(url)
         if error == 0:
@@ -63,8 +63,12 @@ def main():
                 print(colored(f"Loaded {n} reviews. Starting to save new reviews...", "green"))
             while n < args.N:
                 try:
-                    print(colored('[Review ' + str(n) + ']', 'cyan'))
-                    reviews = scraper.get_reviews(n)
+                    target = min(n + BATCH_SIZE, args.N)
+                    print(colored(f"Loading reviews until {target} items are shown...", "yellow"))
+                    scraper.load_until_count(target)
+                    print(colored(f"Loaded {target} reviews. Expanding and parsing batch...", "green"))
+                    reviews = scraper.expand_and_parse_batch(n, target)
+                    print(reviews[-1])
                     if len(reviews) == 0:
                         break
                     for r in reviews:
@@ -72,13 +76,14 @@ def main():
                         if args.source:
                             row_data.append(url[:-1])
                         writer.writerow(row_data)
+                    targetfile.flush()  # <-- flush after each batch
                     n += len(reviews)
-                    delay = random.uniform(2, 5)
+                    delay = random.uniform(0, 2)
                     print(colored(f"Sleeping for {delay:.2f} seconds...", "yellow"))
                     time.sleep(delay)
                 except Exception as e:
                     print(colored(f"Error at review {n}: {e}", "red"))
-                    n += 1  # skip to next review offset
+                    n += 1
                     continue
 
 
