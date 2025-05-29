@@ -4,20 +4,36 @@ from termcolor import colored
 import random
 import time
 import csv
+import os
 
 # HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER = ['name', 'username', 'user_photo',
           'rating', 'timestamp', 'caption', 'review_id', 'waktu_kunjungan', 'waktu_antrean', 'reservasi']
 
 def csv_writer(outpath):
-    targetfile = open('data/' + outpath, mode='w',
-                      encoding='utf-8', newline='\n')
+    csv_path = 'data/' + outpath
+    file_exists = os.path.exists(csv_path)
+    last_row = 0
+    if file_exists:
+        with open(csv_path, encoding='utf-8') as f:
+            next(f, None)
+            last_row = sum(1 for _ in f)
+    mode = 'a' if file_exists and last_row > 0 else 'w'
+    targetfile = open(csv_path, mode=mode, encoding='utf-8', newline='\n')
     writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
-    h = HEADER
-    writer.writerow(h)
+    if mode == 'w':
+        writer.writerow(HEADER)
+    return writer, last_row
 
-    return writer
-
+def get_last_row_count(csv_path):
+    path = 'data/' + csv_path
+    if not os.path.exists(path):
+        return 0
+    with open(path, encoding='utf-8') as f:
+        # Skip the header row
+        next(f, None)
+        row_count = sum(1 for _ in f)
+    return row_count
 
 def main():
     parser = argparse.ArgumentParser()
@@ -29,7 +45,8 @@ def main():
 
     args = parser.parse_args()
 
-    writer = csv_writer(args.o)
+    writer, last_row = csv_writer(args.o)
+    print(colored(f"Resuming from review {last_row}", "yellow"))
 
     # Read URLs from urls.txt
     with open('urls.txt', 'r') as f:
@@ -37,29 +54,32 @@ def main():
 
     scraper = GoogleMapsScraper()
     for url in urls:
-        # Await the coroutine if start is async
         error = scraper.start(url)
         if error == 0:
-            n = 0
+            n = last_row
+            if n > 0:
+                print(colored(f"Loading reviews until {n} items are shown...", "yellow"))
+                scraper.load_until_count(n)
+                print(colored(f"Loaded {n} reviews. Starting to save new reviews...", "green"))
             while n < args.N:
-                # logging to std out
-                print(colored('[Review ' + str(n) + ']', 'cyan'))
-                reviews = scraper.get_reviews(n)
-                if len(reviews) == 0:
-                    break
-                for r in reviews:
-                    row_data = list(r.values())
-                    if args.source:
-                        row_data.append(url[:-1])
-
-                    writer.writerow(row_data)
-
-                n += len(reviews)
-                # Add random delay to mimic human behavior
-                delay = random.uniform(2, 4)
-                print(
-                    colored(f"Sleeping for {delay:.2f} seconds...", "yellow"))
-                time.sleep(delay)
+                try:
+                    print(colored('[Review ' + str(n) + ']', 'cyan'))
+                    reviews = scraper.get_reviews(n)
+                    if len(reviews) == 0:
+                        break
+                    for r in reviews:
+                        row_data = list(r.values())
+                        if args.source:
+                            row_data.append(url[:-1])
+                        writer.writerow(row_data)
+                    n += len(reviews)
+                    delay = random.uniform(2, 5)
+                    print(colored(f"Sleeping for {delay:.2f} seconds...", "yellow"))
+                    time.sleep(delay)
+                except Exception as e:
+                    print(colored(f"Error at review {n}: {e}", "red"))
+                    n += 1  # skip to next review offset
+                    continue
 
 
 if __name__ == "__main__":

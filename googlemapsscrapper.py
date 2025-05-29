@@ -12,11 +12,11 @@ MAX_SCROLLS = 40
 
 
 class GoogleMapsScraper:
-    def __init__(self, debug=False):
+    def __init__(self, debug=True):
         self.debug = debug
         self.driver = self.__get_driver()
 
-    def __get_driver(self, debug=False):
+    def __get_driver(self):
         # "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --remote-debugging-port=9222 --user-data-dir="C:\edge-dev-profile"
         edge_options = Options()
         if not self.debug:
@@ -36,7 +36,8 @@ class GoogleMapsScraper:
         self.driver.get(url)
         
         wait = WebDriverWait(self.driver, MAX_WAIT)
-
+        time.sleep(5)
+        
         # open dropdown menu
         clicked = False
         tries = 0
@@ -75,18 +76,26 @@ class GoogleMapsScraper:
         except Exception:
             pass
 
-    def get_reviews(self, offset):
+    def load_until_count(self, target_count):
+        """Load more reviews until at least target_count review items are present."""
+        while True:
+            response = BeautifulSoup(self.driver.page_source, 'html.parser')
+            rblock = response.find_all('div', class_='bwb7ce')
+            current_count = len(rblock)
+            if current_count >= target_count:
+                break
+            try:
+                self.load_more()
+                time.sleep(2)
+            except Exception:
+                break  # stop if cannot load more
 
+    def get_reviews(self, offset):
+        # Load more, expand, and parse reviews (original behavior)
         self.load_more()
-        
         time.sleep(3)
-        
-        # Click all "Selengkapnya" buttons before parsing
         self.expand_review()
-        
         time.sleep(1)
-        
-        # parse reviews
         response = BeautifulSoup(self.driver.page_source, 'html.parser')
         rblock = response.find_all('div', class_='bwb7ce')
         parsed_reviews = []
@@ -94,10 +103,6 @@ class GoogleMapsScraper:
             if index >= offset:
                 r = self.__parse(review)
                 parsed_reviews.append(r)
-
-                # logging to std out
-                # print(r)
-
         return parsed_reviews
     
     def __parse(self, review):
