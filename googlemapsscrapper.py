@@ -5,10 +5,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
+import random
 
 MAX_WAIT = 10
 MAX_RETRY = 5
 MAX_SCROLLS = 40
+REVIEW_PER_LOAD = 20
 
 
 class GoogleMapsScraper:
@@ -34,10 +36,10 @@ class GoogleMapsScraper:
 
     def start(self, url):
         self.driver.get(url)
-        
+
         wait = WebDriverWait(self.driver, MAX_WAIT)
         time.sleep(5)
-        
+
         # open dropdown menu
         clicked = False
         tries = 0
@@ -60,13 +62,14 @@ class GoogleMapsScraper:
 
         # wait to load review (ajax call)
         time.sleep(5)
-        
+
         return 0
-    
+
     def expand_review(self):
         # Click all visible "Selengkapnya" buttons to expand full captions
         try:
-            buttons = self.driver.find_elements(By.XPATH, '//a[contains(@class, "MtCSLb") and contains(text(), "Selengkapnya")]')
+            buttons = self.driver.find_elements(
+                By.XPATH, '//a[contains(@class, "MtCSLb") and contains(text(), "Selengkapnya")]')
             for btn in buttons:
                 try:
                     self.driver.execute_script("arguments[0].click();", btn)
@@ -78,17 +81,42 @@ class GoogleMapsScraper:
 
     def load_until_count(self, target_count):
         """Load more reviews until at least target_count review items are present."""
-        while True:
-            response = BeautifulSoup(self.driver.page_source, 'html.parser')
-            rblock = response.find_all('div', class_='bwb7ce')
-            current_count = len(rblock)
-            if current_count >= target_count:
-                break
+        response = BeautifulSoup(self.driver.page_source, 'html.parser')
+        rblock = response.find_all('div', class_='bwb7ce')
+        total_review_html = len(rblock)
+
+        total_load_iteration = (
+            target_count - total_review_html) / REVIEW_PER_LOAD
+        current_load_iteration = 0
+        while current_load_iteration < total_load_iteration:
             try:
+                print(
+                    f"[DEBUG] Loading more reviews: iteration {total_review_html + current_load_iteration*20}")
                 self.load_more()
-                time.sleep(2)
+                current_load_iteration += 1
+                delay = random.uniform(0, 1)
+                time.sleep(delay)
             except Exception:
                 break  # stop if cannot load more
+
+    def load_more(self):
+        fullxpath = '/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null'
+
+        start_time = time.time()
+        load_more_bt = WebDriverWait(self.driver, 100).until(
+            EC.element_to_be_clickable((By.XPATH, fullxpath)))
+        load_more_bt.click()
+        elapsed = time.time() - start_time
+        print(f"[DEBUG] load_more took {elapsed:.2f} seconds")
+
+        # Scroll a bit to keep the page 'alive'
+        try:
+            self.driver.execute_script("window.scrollBy(0, 200);")
+            time.sleep(0.2)
+            self.driver.execute_script("window.scrollBy(0, -200);")
+            time.sleep(0.2)
+        except Exception:
+            pass
 
     def __parse(self, review):
         # reviewer name
@@ -128,7 +156,8 @@ class GoogleMapsScraper:
 
         # caption
         caption_div = review.find('div', class_='OA1nbd')
-        caption = caption_div.get_text(separator=' ', strip=True) if caption_div else ''
+        caption = caption_div.get_text(
+            separator=' ', strip=True) if caption_div else ''
 
         # Extract special sections from <div class="zMjRQd">
         waktu_kunjungan = ''
@@ -139,8 +168,10 @@ class GoogleMapsScraper:
             if special_div:
                 special_items = special_div.find_all('div', recursive=False)
                 # The structure is: label, value, <br>, label, value, <br>, label, value
-                labels = [div.get_text(strip=True).lower() for div in special_items if div.get('style') == 'font-weight: 500;']
-                values = [div.get('aria-label', div.get_text(strip=True)) for div in special_items if div.get('aria-label') or div.get('style') != 'font-weight: 500;']
+                labels = [div.get_text(strip=True).lower() for div in special_items if div.get(
+                    'style') == 'font-weight: 500;']
+                values = [div.get('aria-label', div.get_text(strip=True)) for div in special_items if div.get(
+                    'aria-label') or div.get('style') != 'font-weight: 500;']
                 # Map labels to values
                 for i, label in enumerate(labels):
                     if 'waktu kunjungan' in label and i < len(values):
@@ -168,22 +199,6 @@ class GoogleMapsScraper:
             'waktu_antrean': waktu_antrean,
             'reservasi': reservasi
         }
-    
-    def load_more(self):
-        fullxpath = '/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null'
-
-        load_more_bt = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, fullxpath)))
-        load_more_bt.click()
-        
-        # Scroll a bit to keep the page 'alive'
-        try:
-            self.driver.execute_script("window.scrollBy(0, 200);")
-            time.sleep(0.2)
-            self.driver.execute_script("window.scrollBy(0, -200);")
-            time.sleep(0.2)
-        except Exception:
-            pass
 
     def expand_and_parse_batch(self, start, end):
         """Expand and parse reviews from index start to end (exclusive)."""
@@ -197,5 +212,3 @@ class GoogleMapsScraper:
                 r = self.__parse(review)
                 parsed_reviews.append(r)
         return parsed_reviews
-
-

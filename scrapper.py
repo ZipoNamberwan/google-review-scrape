@@ -68,7 +68,7 @@ def main():
                     scraper.load_until_count(target)
                     print(colored(f"Loaded {target} reviews. Expanding and parsing batch...", "green"))
                     reviews = scraper.expand_and_parse_batch(n, target)
-                    print(reviews[-1])
+                    
                     if len(reviews) == 0:
                         break
                     for r in reviews:
