@@ -107,7 +107,7 @@ class GoogleMapsScraper:
             EC.element_to_be_clickable((By.XPATH, fullxpath)))
         load_more_bt.click()
         elapsed = time.time() - start_time
-        print(f"[DEBUG] load_more took {elapsed:.2f} seconds")
+        print(f"[DEBUG] took {elapsed:.2f} seconds")
 
         # Scroll a bit to keep the page 'alive'
         try:

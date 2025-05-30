@@ -34,6 +34,15 @@ def get_last_row_count(csv_path):
         row_count = sum(1 for _ in f)
     return row_count
 
+def stats_writer():
+    stats_path = 'data/stats.csv'
+    stats_exists = os.path.exists(stats_path)
+    stats_file = open(stats_path, mode='a', encoding='utf-8', newline='\n')
+    writer = csv.writer(stats_file)
+    if not stats_exists:
+        writer.writerow(['batch_start', 'batch_end', 'batch_size', 'seconds'])
+    return writer, stats_file
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-N', type=int, default=1, help='Number of iterations')
@@ -46,6 +55,8 @@ def main():
 
     writer, last_row, targetfile = csv_writer(args.o)
     print(colored(f"Resuming from review {last_row}", "yellow"))
+
+    stats_writer_obj, stats_file = stats_writer()
 
     # Read URLs from urls.txt
     with open('urls.txt', 'r') as f:
@@ -65,6 +76,7 @@ def main():
                 try:
                     target = min(n + BATCH_SIZE, args.N)
                     print(colored(f"Loading reviews until {target} items are shown...", "yellow"))
+                    batch_start_time = time.time()
                     scraper.load_until_count(target)
                     print(colored(f"Loaded {target} reviews. Expanding and parsing batch...", "green"))
                     reviews = scraper.expand_and_parse_batch(n, target)
@@ -76,7 +88,10 @@ def main():
                         if args.source:
                             row_data.append(url[:-1])
                         writer.writerow(row_data)
-                    targetfile.flush()  # <-- flush after each batch
+                    batch_elapsed = time.time() - batch_start_time
+                    # Save batch stats
+                    stats_writer_obj.writerow([n, n + len(reviews) - 1, len(reviews), f"{batch_elapsed:.2f}"])
+                    stats_file.flush()
                     n += len(reviews)
                     delay = random.uniform(0, 2)
                     print(colored(f"Sleeping for {delay:.2f} seconds...", "yellow"))
