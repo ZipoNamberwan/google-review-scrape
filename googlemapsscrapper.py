@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
 import random
+import pygetwindow as gw
 
 MAX_WAIT = 10
 MAX_RETRY = 5
@@ -14,8 +15,10 @@ REVIEW_PER_LOAD = 20
 
 
 class GoogleMapsScraper:
-    def __init__(self, debug=True):
+    def __init__(self, debug=True, loadmore_fullxpath=None, newest_fullxpath=None):
         self.debug = debug
+        self.loadmore_fullxpath = loadmore_fullxpath
+        self.newest_fullxpath = newest_fullxpath
         self.driver = self.__get_driver()
 
     def __get_driver(self):
@@ -36,33 +39,33 @@ class GoogleMapsScraper:
 
     def start(self, url):
         self.driver.get(url)
-
         wait = WebDriverWait(self.driver, MAX_WAIT)
         time.sleep(5)
-
         # open dropdown menu
         clicked = False
         tries = 0
         while not clicked and tries < MAX_RETRY:
             try:
-                fullxpath = '/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div'
+                # Activate the Edge window
+                # win = gw.getWindowsWithTitle('Edge')[0]
+                # win.activate()
+                # time.sleep(1) 
+                
+                # wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'GmP9w')))
                 menu_bt = wait.until(EC.element_to_be_clickable(
-                    (By.XPATH, fullxpath)))
+                    (By.XPATH, self.newest_fullxpath)))
+                time.sleep(1)
                 menu_bt.click()
-
+                
                 clicked = True
                 time.sleep(3)
             except Exception as e:
                 tries += 1
-                self.logger.warn('Failed to click sorting button')
-
-            # failed to open the dropdown
+                # Optionally print the exception for debugging
+                print(f"Click failed: {e}")
             if tries == MAX_RETRY:
                 return -1
-
-        # wait to load review (ajax call)
         time.sleep(5)
-
         return 0
 
     def expand_review(self):
@@ -100,15 +103,12 @@ class GoogleMapsScraper:
                 break  # stop if cannot load more
 
     def load_more(self):
-        fullxpath = '/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null'
-
         start_time = time.time()
         load_more_bt = WebDriverWait(self.driver, 100).until(
-            EC.element_to_be_clickable((By.XPATH, fullxpath)))
+            EC.element_to_be_clickable((By.XPATH, self.loadmore_fullxpath)))
         load_more_bt.click()
         elapsed = time.time() - start_time
         print(f"[DEBUG] took {elapsed:.2f} seconds")
-
         # Scroll a bit to keep the page 'alive'
         try:
             self.driver.execute_script("window.scrollBy(0, 200);")

@@ -1,0 +1,38 @@
+[
+    {
+        "name": "lawang sewu",
+        "url": "https://www.google.com/search?sca_esv=e7d273e99eea7fed&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifMJ0UuPb-RM1Bzs_yVzevt-gkRutQ:1748499471723&q=Lawang+Sewu+Semarang&si=AMgyJEsVtO7Zu9YEyquic0WJtZiamUti8WlVIiHVse8gMEYClVSiuMI4L_tp6ZGtGfdXbE8kVoJmUZNbXulI7o3lpR4J6hToOyCZUs5lj1yMksGgbHeh4b0H1l88xY4nVixjkork55Fy4KGJjJMQteBfuskGlkDRxg%3D%3D&sa=X&ved=2ahUKEwixuZuPhMiNAxUe1zgGHW-MGp8QmJ0LegQIHRAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 65000,
+        "order": 5,
+        "execute": true
+    },
+    {
+        "name": "kota lama semarang",
+        "url": "https://www.google.com/search?sca_esv=7c46f205027094dd&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifP4DVurT6LYez7qA5yMPSpIVm92og:1748575752070&q=Kota+Lama+Semarang&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E9v8z0BSOlT9S8g9A3zMmf6DYJXRnZpP6lhhITo1kgBCF4msxbQ8L3eQ6sayksxqbaIoeX0AzwV56DtjVOsfOKoTEh1tLRGZsIqKiQoVzJQec46MRA%3D%3D&sa=X&ved=2ahUKEwiWrMKkoMqNAxXa1zgGHQ_4MXcQmJ0LegQIHhAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 10500,
+        "order": 1,
+        "execute": true
+    },
+    {
+        "name": "candi gedong songo",
+        "url": "https://www.google.com/search?sca_esv=a03deeebd4ceaea7&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifNgo_nuJDcIQKAfePuvjFcMtsIbJA:1748586022981&q=Wisata+Candi+GedongSongo&si=AMgyJEsVtO7Zu9YEyquic0WJtZiamUti8WlVIiHVse8gMEYClSTYk2zEVMN13xrMwekEGvu9FBoDe0Vo-aBuShp3YL1PDlvXmPJ90hTPCdYrDhrxwPHCyc4V6XNH4Kw0Vk-Np7R0Bj6E2niKLTcs7PG3Hz5koE0LOw%3D%3D&sa=X&ved=2ahUKEwj8tIjGxsqNAxUSgGMGHTttC_MQmJ0LegQIHhAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 10500,
+        "order": 2,
+        "execute": true
+    },
+    {
+        "name": "museum kereta api ambarawa",
+        "url": "https://www.google.com/search?sca_esv=a03deeebd4ceaea7&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifMl2oZ4BzWiORkJZSjy-bC-gkGYcw:1748586162308&q=Museum+Kereta+Api+Ambarawa&si=AMgyJEsVtO7Zu9YEyquic0WJtZiamUti8WlVIiHVse8gMEYClUziERAOBGMybc96oH5ri_NvXu3o5a1loPT7fep4eZVSQqqwbtVQSZrn1bOCJSwGF1SSqXT3uxZHCSymUvLWQrEcUjeOSMRos1Hrigq0I5xPOrjkOw%3D%3D&sa=X&ved=2ahUKEwj658CIx8qNAxVZxTgGHZrGCiAQmJ0LegQIMhAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 10500,
+        "order": 3,
+        "execute": true
+    }
+]
