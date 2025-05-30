@@ -6,7 +6,7 @@
         "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
         "review_limit": 65000,
         "order": 5,
-        "execute": true
+        "execute": false
     },
     {
         "name": "kota lama semarang",
@@ -15,23 +15,50 @@
         "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
         "review_limit": 10500,
         "order": 1,
-        "execute": true
+        "execute": false
     },
     {
         "name": "candi gedong songo",
         "url": "https://www.google.com/search?sca_esv=a03deeebd4ceaea7&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifNgo_nuJDcIQKAfePuvjFcMtsIbJA:1748586022981&q=Wisata+Candi+GedongSongo&si=AMgyJEsVtO7Zu9YEyquic0WJtZiamUti8WlVIiHVse8gMEYClSTYk2zEVMN13xrMwekEGvu9FBoDe0Vo-aBuShp3YL1PDlvXmPJ90hTPCdYrDhrxwPHCyc4V6XNH4Kw0Vk-Np7R0Bj6E2niKLTcs7PG3Hz5koE0LOw%3D%3D&sa=X&ved=2ahUKEwj8tIjGxsqNAxUSgGMGHTttC_MQmJ0LegQIHhAA&biw=1920&bih=945&dpr=1",
         "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
         "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
-        "review_limit": 10500,
+        "review_limit": 16000,
         "order": 2,
-        "execute": true
+        "execute": false
     },
     {
         "name": "museum kereta api ambarawa",
         "url": "https://www.google.com/search?sca_esv=a03deeebd4ceaea7&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifMl2oZ4BzWiORkJZSjy-bC-gkGYcw:1748586162308&q=Museum+Kereta+Api+Ambarawa&si=AMgyJEsVtO7Zu9YEyquic0WJtZiamUti8WlVIiHVse8gMEYClUziERAOBGMybc96oH5ri_NvXu3o5a1loPT7fep4eZVSQqqwbtVQSZrn1bOCJSwGF1SSqXT3uxZHCSymUvLWQrEcUjeOSMRos1Hrigq0I5xPOrjkOw%3D%3D&sa=X&ved=2ahUKEwj658CIx8qNAxVZxTgGHZrGCiAQmJ0LegQIMhAA&biw=1920&bih=945&dpr=1",
         "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
         "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
-        "review_limit": 10500,
+        "review_limit": 14000,
+        "order": 3,
+        "execute": false
+    },
+    {
+        "name": "dusun semilir",
+        "url": "https://www.google.com/search?sca_esv=8f2d608cc335416a&rlz=1C1ONGR_enID1077ID1077&hotel_occupancy=2&sxsrf=AE3TifOVF23ULYmfzRtbITQOZ-7l_euWZQ:1748622885951&q=Dusun+Semilir&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E9v7OFVNiHHdbyraJxvhFsTKN1NbY7gGBZRC-NmBTwTCUEZRg0uLblnC_Ao8wtRnBwNY5oT6jUWOKo5o2F3U9KTR5I5h&sa=X&ved=2ahUKEwjfiNrvz8uNAxXT8DgGHSkIA5gQmJ0LegQIHxAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[2]/div/div/div/div/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 20000,
+        "order": 1,
+        "execute": true
+    },
+    {
+        "name": "saloka park",
+        "url": "https://www.google.com/search?sca_esv=8f2d608cc335416a&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifMuvzgUc3VCCgyVRAvRzt4QkwaxQg:1748623083815&q=Saloka+Theme+Park&si=AMgyJEvkVjFQtirYNBhM3ZJIRTaSJ6PxY6y1_6WZHGInbzDnMXeU-4bH1SKUtJCfX2-PeavkcKNfsx-TW_XccMEfZOhFGnENimO-9GjAZ-iCwAgi0q-jIEKS2tLIPTDq0U7ePbE6mQRw&sa=X&ved=2ahUKEwjK5YbO0MuNAxVJ-DgGHRugBPEQmJ0LegQIGhAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[2]/div/div/div/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 19000,
+        "order": 2,
+        "execute": true
+    },
+    {
+        "name": "cimory",
+        "url": "https://www.google.com/search?sca_esv=8f2d608cc335416a&rlz=1C1ONGR_enID1077ID1077&sxsrf=AE3TifNDKmEVlZWvSUsYKSdVbemrJTMs4A:1748623214596&q=Dairyland+On+The+Valley&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E0oGxDyd-p3nLHBHjVMnoDrkEK6rtjgDVPWy_mM2tk5ACt2iySCDmr4TwSYr1hOFQeEwp5udldQof_D12KGOCOwiEh9kk-YL8iSaF2inwCJdvU8U2Q%3D%3D&sa=X&ved=2ahUKEwisibWM0cuNAxVlRmcHHScADZcQmJ0LegQIGhAA&biw=1920&bih=945&dpr=1",
+        "loadmore_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[3]/div/div/div/div/div/div/div[2]/c-wiz/div/div[6]/div/div[2]/div/div/span[1]/null",
+        "newest_fullxpath": "/html/body/div[3]/div/div[12]/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/div/div[3]/div/div/div/div/div[3]/div[3]/div/div/div/div/div/div/div[2]/c-wiz/div/div[5]/g-scrolling-carousel/div[1]/div/div/div[2]/div",
+        "review_limit": 20000,
         "order": 3,
         "execute": true
     }
